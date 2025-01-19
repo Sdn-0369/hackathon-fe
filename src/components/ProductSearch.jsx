@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 
 const ProductSearch = () => {
-  const [data, setData] = useState([]);
-  const [search, setSearch] = useState(""); // State variable for search input
+  const [data, setData] = useState(null);
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
   const supplier = [
@@ -20,12 +20,16 @@ const ProductSearch = () => {
     { material: "PVC Fittings", category: "Plumbing", organization: "FlowMaster", rating: 4.2 },
   ];
 
-  // Filter supplier data based on the search input
-  const call = () => {
-    const output = supplier.filter((item) =>
+  const fetchData = () => {
+    if (search.trim() === "") {
+      setData(null);
+      return;
+    }
+
+    const filteredData = supplier.filter((item) =>
       item.material.toLowerCase().includes(search.toLowerCase())
     );
-    setData(output);
+    setData({ data: filteredData });
   };
 
   return (
@@ -37,11 +41,9 @@ const ProductSearch = () => {
       <main className="flex-grow p-6">
         <div className="max-w-3xl mx-auto">
           <div className="mb-6 text-center">
-            <h2 className="text-xl font-semibold mb-2 text-gray-800">
-              Search Materials
-            </h2>
-            <p className="text-sm text-gray-700">
-              Enter the name of a material to see available vendors.
+            <h2 className={`text-xl font-semibold mb-2 text-gray-800`}>Search Materials</h2>
+            <p className={`text-sm text-gray-700`}>
+              Select a product to see the available vendors
             </p>
           </div>
 
@@ -50,36 +52,29 @@ const ProductSearch = () => {
               type="text"
               placeholder="Search materials here..."
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 bg-gray-100"
-              
+              value={search}
               onChange={(e) => {
-                setSearch(e.target.value); // Update search input state
-                call(); // Filter supplier data
+                setSearch(e.target.value);
+                fetchData();
               }}
             />
           </div>
 
-          {/* Display Search Results */}
-          {search && data.length > 0 && (
+          {search && data && data.data.length > 0 && (
             <div className="mt-4 bg-white shadow-md rounded-md">
               <ul className="divide-y divide-gray-200">
-                {data.map((item, idx) => (
+                {data.data.map((item, idx) => (
                   <li
                     key={idx}
                     className="p-3 hover:bg-gray-50 transition duration-200 flex justify-between items-center"
                   >
                     <div>
                       <div className="font-semibold text-gray-800">{item.material}</div>
-                      <div className="text-sm text-gray-600">
-                        Category: {item.category}
-                      </div>
-                      <div className="text-sm text-gray-600">
-                        Organization: {item.organization}
-                      </div>
+                      <div className="text-sm text-gray-600">Category: {item.category}</div>
+                      <div className="text-sm text-gray-600">Organization: {item.organization}</div>
                       <div className="text-sm text-gray-600 flex items-center">
                         Seller Rating:{" "}
-                        <span className="ml-2 text-yellow-500">
-                          ⭐ {item.rating}
-                        </span>
+                        <span className="ml-2 text-yellow-500">⭐ {item.rating}</span>
                       </div>
                     </div>
                     <button
@@ -94,8 +89,7 @@ const ProductSearch = () => {
             </div>
           )}
 
-          {/* No Results Found */}
-          {search && data.length === 0 && (
+          {search && data && data.data.length === 0 && (
             <p className="text-gray-500 mt-4 text-center">
               No results found. Please try a different search.
             </p>
@@ -103,7 +97,6 @@ const ProductSearch = () => {
         </div>
       </main>
 
-      {/* Footer */}
       <Footer />
     </div>
   );
