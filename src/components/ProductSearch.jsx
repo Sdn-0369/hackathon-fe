@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 
 const ProductSearch = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [search, setSearch] = useState(""); // State variable for search input
   const navigate = useNavigate();
 
@@ -37,19 +37,11 @@ const ProductSearch = () => {
       <main className="flex-grow p-6">
         <div className="max-w-3xl mx-auto">
           <div className="mb-6 text-center">
-            <h2
-              className={`text-xl font-semibold mb-2 ${
-                search ? "text-gray-500 blur-sm" : "text-gray-800"
-              }`}
-            >
+            <h2 className="text-xl font-semibold mb-2 text-gray-800">
               Search Materials
             </h2>
-            <p
-              className={`text-sm ${
-                search ? "text-gray-500 blur-sm" : "text-gray-700"
-              }`}
-            >
-              Select a product to see the available vendors
+            <p className="text-sm text-gray-700">
+              Enter the name of a material to see available vendors.
             </p>
           </div>
 
@@ -67,7 +59,7 @@ const ProductSearch = () => {
           </div>
 
           {/* Display Search Results */}
-          {search && data && data.length > 0 && (
+          {search && data.length > 0 && (
             <div className="mt-4 bg-white shadow-md rounded-md">
               <ul className="divide-y divide-gray-200">
                 {data.map((item, idx) => (
@@ -103,7 +95,7 @@ const ProductSearch = () => {
           )}
 
           {/* No Results Found */}
-          {search && data && data.length === 0 && (
+          {search && data.length === 0 && (
             <p className="text-gray-500 mt-4 text-center">
               No results found. Please try a different search.
             </p>
