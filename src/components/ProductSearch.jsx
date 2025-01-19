@@ -50,7 +50,7 @@ const ProductSearch = () => {
               type="text"
               placeholder="Search materials here..."
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 bg-gray-100"
-              value={search}
+              
               onChange={(e) => {
                 setSearch(e.target.value); // Update search input state
                 call(); // Filter supplier data
