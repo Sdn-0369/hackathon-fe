@@ -1,45 +1,31 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import Footer from "./Footer";
 
 const ProductSearch = () => {
   const [data, setData] = useState(null);
   const [search, setSearch] = useState("");
-  const navigate = useNavigate(); 
-const supplier = [
-  { material: "Cement", category: "Construction", organization: "BuildCo", rating: 4.5 },
-  { material: "Pipes", category: "Plumbing", organization: "FlowMaster", rating: 4.2 },
-  { material: "Bricks", category: "Construction", organization: "BrickMakers Inc.", rating: 4.7 },
-  { material: "Steel Rods", category: "Construction", organization: "MetalWorks", rating: 4.8 },
-  { material: "Paint", category: "Decor", organization: "ColorWave", rating: 4.3 },
-  { material: "Tiles", category: "Flooring", organization: "TileXpress", rating: 4.6 },
-  { material: "Electrical Cables", category: "Electrical", organization: "PowerLine", rating: 4.4 },
-  { material: "Wooden Beams", category: "Woodwork", organization: "WoodCrafts", rating: 4.1 },
-  { material: "Glass Sheets", category: "Windows", organization: "ClearView", rating: 4.5 },
-  { material: "PVC Fittings", category: "Plumbing", organization: "FlowMaster", rating: 4.2 },
-];
-  // const fetchData = async () => {
-  //   try {
-  //     if (search.trim() === "") {
-  //       setData(null); 
-  //       return;
-  //     }
-  //     const response = await axios.post("http://localhost:3002/", { search });
-  //     setData(response.data);
-  //     localStorage.setItem("data", JSON.stringify(response.data)); structure
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // };
-  function call(){
-     const output = supplier.filter((item) =>
-    item.material.toLowerCase().includes(search)
-  );
-    setData(output)
-  }
- 
-  
+  const navigate = useNavigate();
+
+  const supplier = [
+    { material: "Cement", category: "Construction", organization: "BuildCo", rating: 4.5 },
+    { material: "Pipes", category: "Plumbing", organization: "FlowMaster", rating: 4.2 },
+    { material: "Bricks", category: "Construction", organization: "BrickMakers Inc.", rating: 4.7 },
+    { material: "Steel Rods", category: "Construction", organization: "MetalWorks", rating: 4.8 },
+    { material: "Paint", category: "Decor", organization: "ColorWave", rating: 4.3 },
+    { material: "Tiles", category: "Flooring", organization: "TileXpress", rating: 4.6 },
+    { material: "Electrical Cables", category: "Electrical", organization: "PowerLine", rating: 4.4 },
+    { material: "Wooden Beams", category: "Woodwork", organization: "WoodCrafts", rating: 4.1 },
+    { material: "Glass Sheets", category: "Windows", organization: "ClearView", rating: 4.5 },
+    { material: "PVC Fittings", category: "Plumbing", organization: "FlowMaster", rating: 4.2 },
+  ];
+
+  const call = () => {
+    const output = supplier.filter((item) =>
+      item.material.toLowerCase().includes(search.toLowerCase())
+    );
+    setData(output);
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100 text-gray-800">
@@ -67,7 +53,7 @@ const supplier = [
             </p>
           </div>
 
-          
+          {/* Search Input */}
           <div className="bg-white shadow-md p-4 rounded-md">
             <input
               type="text"
@@ -80,11 +66,11 @@ const supplier = [
             />
           </div>
 
-          
-          {search && data && data.data.length > 0 && (
+          {/* Results Section */}
+          {search && data && data.length > 0 && (
             <div className="mt-4 bg-white shadow-md rounded-md">
               <ul className="divide-y divide-gray-200">
-                {data.data.map((item, idx) => (
+                {data.map((item, idx) => (
                   <li
                     key={idx}
                     data-id={idx}
@@ -106,7 +92,7 @@ const supplier = [
                       </div>
                     </div>
                     <button
-                      onClick={() => navigate("/generate-rfq")} 
+                      onClick={() => navigate("/generate-rfq")}
                       className="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-900 transition duration-200 shadow-md"
                     >
                       Generate RFQ
@@ -117,8 +103,8 @@ const supplier = [
             </div>
           )}
 
-          
-          {search && data && data.data.length === 0 && (
+          {/* No Results Found */}
+          {search && data && data.length === 0 && (
             <p className="text-gray-500 mt-4 text-center">
               No results found. Please try a different search.
             </p>
@@ -126,7 +112,7 @@ const supplier = [
         </div>
       </main>
 
-      
+      {/* Footer */}
       <Footer />
     </div>
   );
