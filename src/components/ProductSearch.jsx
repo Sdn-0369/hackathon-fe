@@ -7,20 +7,39 @@ const ProductSearch = () => {
   const [data, setData] = useState(null);
   const [search, setSearch] = useState("");
   const navigate = useNavigate(); 
-
-  const fetchData = async () => {
-    try {
-      if (search.trim() === "") {
-        setData(null); 
-        return;
-      }
-      const response = await axios.post("http://localhost:3002/", { search });
-      setData(response.data);
-      localStorage.setItem("data", JSON.stringify(response.data)); structure
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+const supplier = [
+  { material: "Cement", category: "Construction", organization: "BuildCo", rating: 4.5 },
+  { material: "Pipes", category: "Plumbing", organization: "FlowMaster", rating: 4.2 },
+  { material: "Bricks", category: "Construction", organization: "BrickMakers Inc.", rating: 4.7 },
+  { material: "Steel Rods", category: "Construction", organization: "MetalWorks", rating: 4.8 },
+  { material: "Paint", category: "Decor", organization: "ColorWave", rating: 4.3 },
+  { material: "Tiles", category: "Flooring", organization: "TileXpress", rating: 4.6 },
+  { material: "Electrical Cables", category: "Electrical", organization: "PowerLine", rating: 4.4 },
+  { material: "Wooden Beams", category: "Woodwork", organization: "WoodCrafts", rating: 4.1 },
+  { material: "Glass Sheets", category: "Windows", organization: "ClearView", rating: 4.5 },
+  { material: "PVC Fittings", category: "Plumbing", organization: "FlowMaster", rating: 4.2 },
+];
+  // const fetchData = async () => {
+  //   try {
+  //     if (search.trim() === "") {
+  //       setData(null); 
+  //       return;
+  //     }
+  //     const response = await axios.post("http://localhost:3002/", { search });
+  //     setData(response.data);
+  //     localStorage.setItem("data", JSON.stringify(response.data)); structure
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
+  function search(){
+     const output = supplier.filter((item) =>
+    item.material.toLowerCase().includes(search)
+  );
+    setData(output)
+  }
+ 
+  
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-100 text-gray-800">
@@ -56,7 +75,7 @@ const ProductSearch = () => {
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 bg-gray-100"
               onChange={(e) => {
                 setSearch(e.target.value);
-                fetchData();
+                search();
               }}
             />
           </div>
