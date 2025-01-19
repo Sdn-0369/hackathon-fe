@@ -4,7 +4,7 @@ import Footer from "./Footer";
 
 const ProductSearch = () => {
   const [data, setData] = useState(null);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(""); // State variable for search input
   const navigate = useNavigate();
 
   const supplier = [
@@ -20,6 +20,7 @@ const ProductSearch = () => {
     { material: "PVC Fittings", category: "Plumbing", organization: "FlowMaster", rating: 4.2 },
   ];
 
+  // Filter supplier data based on the search input
   const call = () => {
     const output = supplier.filter((item) =>
       item.material.toLowerCase().includes(search.toLowerCase())
@@ -35,7 +36,6 @@ const ProductSearch = () => {
 
       <main className="flex-grow p-6">
         <div className="max-w-3xl mx-auto">
-          {/* Title */}
           <div className="mb-6 text-center">
             <h2
               className={`text-xl font-semibold mb-2 ${
@@ -53,27 +53,26 @@ const ProductSearch = () => {
             </p>
           </div>
 
-          {/* Search Input */}
           <div className="bg-white shadow-md p-4 rounded-md">
             <input
               type="text"
               placeholder="Search materials here..."
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 bg-gray-100"
+              value={search}
               onChange={(e) => {
-                setSearch(e.target.value);
-                call();
+                setSearch(e.target.value); // Update search input state
+                call(); // Filter supplier data
               }}
             />
           </div>
 
-          {/* Results Section */}
+          {/* Display Search Results */}
           {search && data && data.length > 0 && (
             <div className="mt-4 bg-white shadow-md rounded-md">
               <ul className="divide-y divide-gray-200">
                 {data.map((item, idx) => (
                   <li
                     key={idx}
-                    data-id={idx}
                     className="p-3 hover:bg-gray-50 transition duration-200 flex justify-between items-center"
                   >
                     <div>
