@@ -32,7 +32,7 @@ const supplier = [
   //     console.error("Error fetching data:", error);
   //   }
   // };
-  function search(){
+  function call(){
      const output = supplier.filter((item) =>
     item.material.toLowerCase().includes(search)
   );
@@ -75,7 +75,7 @@ const supplier = [
               className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400 bg-gray-100"
               onChange={(e) => {
                 setSearch(e.target.value);
-                search();
+                call();
               }}
             />
           </div>
